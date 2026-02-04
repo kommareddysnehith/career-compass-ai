@@ -1,114 +1,99 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  GraduationCap,
-  Briefcase,
-  Heart,
-  Settings,
-  ChevronRight,
-  Plus,
-  X,
-  Check,
-} from "lucide-react";
+import { GraduationCap, Briefcase, Heart, Settings, ChevronRight, Plus, X, Check } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { Button } from "@/components/ui/button";
 import { ProgressRing } from "@/components/ui/ProgressRing";
 import { cn } from "@/lib/utils";
-
 interface SkillItem {
   name: string;
   level: number;
   interest: "low" | "medium" | "high";
 }
-
-const interestTags = [
-  "Problem Solving",
-  "Creativity",
-  "Leadership",
-  "Data Analysis",
-  "Teaching",
-  "Innovation",
-  "Design",
-  "Writing",
-  "Public Speaking",
-  "Research",
-  "Technology",
-  "Strategy",
-];
-
-const industries = [
-  { name: "Technology", icon: "💻" },
-  { name: "Healthcare", icon: "🏥" },
-  { name: "Finance", icon: "💰" },
-  { name: "Education", icon: "📚" },
-  { name: "Creative", icon: "🎨" },
-  { name: "Business", icon: "📊" },
-];
-
+const interestTags = ["Problem Solving", "Creativity", "Leadership", "Data Analysis", "Teaching", "Innovation", "Design", "Writing", "Public Speaking", "Research", "Technology", "Strategy"];
+const industries = [{
+  name: "Technology",
+  icon: "💻"
+}, {
+  name: "Healthcare",
+  icon: "🏥"
+}, {
+  name: "Finance",
+  icon: "💰"
+}, {
+  name: "Education",
+  icon: "📚"
+}, {
+  name: "Creative",
+  icon: "🎨"
+}, {
+  name: "Business",
+  icon: "📊"
+}];
 const Profile = () => {
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([
-    "Problem Solving",
-    "Creativity",
-    "Technology",
-    "Design",
-  ]);
+  const [selectedInterests, setSelectedInterests] = useState<string[]>(["Problem Solving", "Creativity", "Technology", "Design"]);
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>(["Technology", "Creative"]);
   const [workStyle, setWorkStyle] = useState<string>("hybrid");
-  const [skills, setSkills] = useState<SkillItem[]>([
-    { name: "JavaScript", level: 4, interest: "high" },
-    { name: "UI/UX Design", level: 3, interest: "high" },
-    { name: "Communication", level: 5, interest: "medium" },
-  ]);
+  const [skills, setSkills] = useState<SkillItem[]>([{
+    name: "JavaScript",
+    level: 4,
+    interest: "high"
+  }, {
+    name: "UI/UX Design",
+    level: 3,
+    interest: "high"
+  }, {
+    name: "Communication",
+    level: 5,
+    interest: "medium"
+  }]);
   const [newSkill, setNewSkill] = useState("");
-
   const toggleInterest = (interest: string) => {
-    setSelectedInterests((prev) =>
-      prev.includes(interest)
-        ? prev.filter((i) => i !== interest)
-        : [...prev, interest]
-    );
+    setSelectedInterests(prev => prev.includes(interest) ? prev.filter(i => i !== interest) : [...prev, interest]);
   };
-
   const toggleIndustry = (industry: string) => {
-    setSelectedIndustries((prev) =>
-      prev.includes(industry)
-        ? prev.filter((i) => i !== industry)
-        : [...prev, industry]
-    );
+    setSelectedIndustries(prev => prev.includes(industry) ? prev.filter(i => i !== industry) : [...prev, industry]);
   };
-
   const addSkill = () => {
-    if (newSkill.trim() && !skills.find((s) => s.name === newSkill)) {
-      setSkills((prev) => [...prev, { name: newSkill, level: 3, interest: "medium" }]);
+    if (newSkill.trim() && !skills.find(s => s.name === newSkill)) {
+      setSkills(prev => [...prev, {
+        name: newSkill,
+        level: 3,
+        interest: "medium"
+      }]);
       setNewSkill("");
     }
   };
-
   const updateSkillLevel = (name: string, level: number) => {
-    setSkills((prev) =>
-      prev.map((s) => (s.name === name ? { ...s, level } : s))
-    );
+    setSkills(prev => prev.map(s => s.name === name ? {
+      ...s,
+      level
+    } : s));
   };
-
   const removeSkill = (name: string) => {
-    setSkills((prev) => prev.filter((s) => s.name !== name));
+    setSkills(prev => prev.filter(s => s.name !== name));
   };
-
-  const sections = [
-    { name: "Education", progress: 80, icon: GraduationCap },
-    { name: "Skills", progress: 60, icon: Briefcase },
-    { name: "Interests", progress: 90, icon: Heart },
-    { name: "Preferences", progress: 40, icon: Settings },
-  ];
-
-  const overallProgress = Math.round(
-    sections.reduce((acc, s) => acc + s.progress, 0) / sections.length
-  );
-
-  return (
-    <div className="min-h-screen flex flex-col bg-background">
+  const sections = [{
+    name: "Education",
+    progress: 80,
+    icon: GraduationCap
+  }, {
+    name: "Skills",
+    progress: 60,
+    icon: Briefcase
+  }, {
+    name: "Interests",
+    progress: 90,
+    icon: Heart
+  }, {
+    name: "Preferences",
+    progress: 40,
+    icon: Settings
+  }];
+  const overallProgress = Math.round(sections.reduce((acc, s) => acc + s.progress, 0) / sections.length);
+  return <div className="min-h-screen flex flex-col bg-background">
       <Header isLoggedIn={true} />
       <main className="flex-1">
         {/* Header Section */}
@@ -145,12 +130,7 @@ const Profile = () => {
                 <div className="p-6 rounded-2xl bg-card border border-border shadow-card">
                   <h3 className="font-semibold text-foreground mb-4">Profile Sections</h3>
                   <div className="space-y-3">
-                    {sections.map((section) => (
-                      <a
-                        key={section.name}
-                        href={`#${section.name.toLowerCase()}`}
-                        className="flex items-center justify-between p-3 rounded-xl hover:bg-muted transition-colors group"
-                      >
+                    {sections.map(section => <a key={section.name} href={`#${section.name.toLowerCase()}`} className="flex items-center justify-between p-3 rounded-xl hover:bg-muted transition-colors group">
                         <div className="flex items-center gap-3">
                           <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
                             <section.icon className="h-5 w-5 text-primary" />
@@ -161,8 +141,7 @@ const Profile = () => {
                           </div>
                         </div>
                         <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                      </a>
-                    ))}
+                      </a>)}
                   </div>
                 </div>
               </div>
@@ -171,12 +150,13 @@ const Profile = () => {
             {/* Main Content */}
             <div className="lg:col-span-9 space-y-8">
               {/* Education Section */}
-              <motion.div
-                id="education"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="p-6 rounded-2xl bg-card border border-border shadow-card"
-              >
+              <motion.div id="education" initial={{
+              opacity: 0,
+              y: 20
+            }} animate={{
+              opacity: 1,
+              y: 0
+            }} className="p-6 rounded-2xl bg-card border border-border shadow-card">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="h-12 w-12 rounded-xl gradient-bg flex items-center justify-center">
@@ -211,13 +191,15 @@ const Profile = () => {
               </motion.div>
 
               {/* Skills Section */}
-              <motion.div
-                id="skills"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="p-6 rounded-2xl bg-card border border-border shadow-card"
-              >
+              <motion.div id="skills" initial={{
+              opacity: 0,
+              y: 20
+            }} animate={{
+              opacity: 1,
+              y: 0
+            }} transition={{
+              delay: 0.1
+            }} className="p-6 rounded-2xl bg-card border border-border shadow-card">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="h-12 w-12 rounded-xl gradient-bg flex items-center justify-center">
@@ -228,21 +210,14 @@ const Profile = () => {
                       <p className="text-sm text-muted-foreground">Your abilities and expertise</p>
                     </div>
                   </div>
-                  <span className="px-3 py-1 rounded-full text-xs font-medium bg-warning/10 text-warning">
+                  <span className="px-3 py-1 rounded-full text-xs font-medium bg-warning/10 text-warning text-center">
                     60% Complete
                   </span>
                 </div>
 
                 {/* Add Skill */}
                 <div className="flex gap-2 mb-6">
-                  <input
-                    type="text"
-                    value={newSkill}
-                    onChange={(e) => setNewSkill(e.target.value)}
-                    placeholder="Add a skill (e.g., Python, Leadership)"
-                    className="flex-1 px-4 py-2.5 rounded-xl bg-muted border-0 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-                    onKeyDown={(e) => e.key === "Enter" && addSkill()}
-                  />
+                  <input type="text" value={newSkill} onChange={e => setNewSkill(e.target.value)} placeholder="Add a skill (e.g., Python, Leadership)" className="flex-1 px-4 py-2.5 rounded-xl bg-muted border-0 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50" onKeyDown={e => e.key === "Enter" && addSkill()} />
                   <Button onClick={addSkill} variant="gradient">
                     <Plus className="h-4 w-4" />
                   </Button>
@@ -250,53 +225,36 @@ const Profile = () => {
 
                 {/* Skills List */}
                 <div className="space-y-4">
-                  {skills.map((skill) => (
-                    <div
-                      key={skill.name}
-                      className="p-4 rounded-xl bg-muted/50 border border-border"
-                    >
+                  {skills.map(skill => <div key={skill.name} className="p-4 rounded-xl bg-muted/50 border border-border">
                       <div className="flex items-center justify-between mb-3">
                         <span className="font-medium text-foreground">{skill.name}</span>
-                        <button
-                          onClick={() => removeSkill(skill.name)}
-                          className="h-6 w-6 rounded-full hover:bg-destructive/10 flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors"
-                        >
+                        <button onClick={() => removeSkill(skill.name)} className="h-6 w-6 rounded-full hover:bg-destructive/10 flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors">
                           <X className="h-4 w-4" />
                         </button>
                       </div>
                       <div className="flex items-center gap-4">
                         <span className="text-xs text-muted-foreground w-20">Proficiency:</span>
                         <div className="flex gap-1">
-                          {[1, 2, 3, 4, 5].map((level) => (
-                            <button
-                              key={level}
-                              onClick={() => updateSkillLevel(skill.name, level)}
-                              className={cn(
-                                "h-8 w-8 rounded-lg transition-all",
-                                skill.level >= level
-                                  ? "gradient-bg"
-                                  : "bg-muted hover:bg-muted/80"
-                              )}
-                            />
-                          ))}
+                          {[1, 2, 3, 4, 5].map(level => <button key={level} onClick={() => updateSkillLevel(skill.name, level)} className={cn("h-8 w-8 rounded-lg transition-all", skill.level >= level ? "gradient-bg" : "bg-muted hover:bg-muted/80")} />)}
                         </div>
                         <span className="text-xs text-muted-foreground ml-2">
                           {["", "Beginner", "Basic", "Intermediate", "Advanced", "Expert"][skill.level]}
                         </span>
                       </div>
-                    </div>
-                  ))}
+                    </div>)}
                 </div>
               </motion.div>
 
               {/* Interests Section */}
-              <motion.div
-                id="interests"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="p-6 rounded-2xl bg-card border border-border shadow-card"
-              >
+              <motion.div id="interests" initial={{
+              opacity: 0,
+              y: 20
+            }} animate={{
+              opacity: 1,
+              y: 0
+            }} transition={{
+              delay: 0.2
+            }} className="p-6 rounded-2xl bg-card border border-border shadow-card">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="h-12 w-12 rounded-xl gradient-bg flex items-center justify-center">
@@ -313,34 +271,23 @@ const Profile = () => {
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  {interestTags.map((interest) => (
-                    <button
-                      key={interest}
-                      onClick={() => toggleInterest(interest)}
-                      className={cn(
-                        "px-4 py-2 rounded-full text-sm font-medium transition-all",
-                        selectedInterests.includes(interest)
-                          ? "gradient-bg text-primary-foreground shadow-md"
-                          : "bg-muted text-muted-foreground hover:bg-muted/80"
-                      )}
-                    >
-                      {selectedInterests.includes(interest) && (
-                        <Check className="h-3 w-3 inline mr-1" />
-                      )}
+                  {interestTags.map(interest => <button key={interest} onClick={() => toggleInterest(interest)} className={cn("px-4 py-2 rounded-full text-sm font-medium transition-all", selectedInterests.includes(interest) ? "gradient-bg text-primary-foreground shadow-md" : "bg-muted text-muted-foreground hover:bg-muted/80")}>
+                      {selectedInterests.includes(interest) && <Check className="h-3 w-3 inline mr-1" />}
                       {interest}
-                    </button>
-                  ))}
+                    </button>)}
                 </div>
               </motion.div>
 
               {/* Preferences Section */}
-              <motion.div
-                id="preferences"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="p-6 rounded-2xl bg-card border border-border shadow-card"
-              >
+              <motion.div id="preferences" initial={{
+              opacity: 0,
+              y: 20
+            }} animate={{
+              opacity: 1,
+              y: 0
+            }} transition={{
+              delay: 0.3
+            }} className="p-6 rounded-2xl bg-card border border-border shadow-card">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="h-12 w-12 rounded-xl gradient-bg flex items-center justify-center">
@@ -360,21 +307,10 @@ const Profile = () => {
                 <div className="mb-6">
                   <h4 className="text-sm font-semibold text-foreground mb-3">Preferred Industries</h4>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {industries.map((industry) => (
-                      <button
-                        key={industry.name}
-                        onClick={() => toggleIndustry(industry.name)}
-                        className={cn(
-                          "p-4 rounded-xl border-2 transition-all text-center",
-                          selectedIndustries.includes(industry.name)
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/50"
-                        )}
-                      >
+                    {industries.map(industry => <button key={industry.name} onClick={() => toggleIndustry(industry.name)} className={cn("p-4 rounded-xl border-2 transition-all text-center", selectedIndustries.includes(industry.name) ? "border-primary bg-primary/5" : "border-border hover:border-primary/50")}>
                         <span className="text-2xl mb-2 block">{industry.icon}</span>
                         <span className="text-sm font-medium text-foreground">{industry.name}</span>
-                      </button>
-                    ))}
+                      </button>)}
                   </div>
                 </div>
 
@@ -382,20 +318,9 @@ const Profile = () => {
                 <div>
                   <h4 className="text-sm font-semibold text-foreground mb-3">Work Style</h4>
                   <div className="flex gap-3">
-                    {["office", "remote", "hybrid"].map((style) => (
-                      <button
-                        key={style}
-                        onClick={() => setWorkStyle(style)}
-                        className={cn(
-                          "flex-1 p-4 rounded-xl border-2 transition-all capitalize",
-                          workStyle === style
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/50"
-                        )}
-                      >
+                    {["office", "remote", "hybrid"].map(style => <button key={style} onClick={() => setWorkStyle(style)} className={cn("flex-1 p-4 rounded-xl border-2 transition-all capitalize", workStyle === style ? "border-primary bg-primary/5" : "border-border hover:border-primary/50")}>
                         {style}
-                      </button>
-                    ))}
+                      </button>)}
                   </div>
                 </div>
               </motion.div>
@@ -412,8 +337,6 @@ const Profile = () => {
       </main>
       <Footer />
       <ChatWidget />
-    </div>
-  );
+    </div>;
 };
-
 export default Profile;
