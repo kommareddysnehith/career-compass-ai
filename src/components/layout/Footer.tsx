@@ -15,11 +15,11 @@ export const Footer = () => {
                 <Compass className="h-5 w-5 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold gradient-hero-text">
-                CareerCompass AI
+              Voca
               </span>
             </Link>
             <p className="text-sm text-muted-foreground mb-4">
-              AI-powered career guidance to help you discover your perfect career path.
+            Stop searching. Find where you fit.
             </p>
             <div className="flex items-center gap-3">
               <a
@@ -103,7 +103,7 @@ export const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © {currentYear} CareerCompass AI. All rights reserved.
+            © {currentYear} Voca. All rights reserved.
           </p>
           <p className="text-sm text-muted-foreground">
             Made with ❤️ for career seekers everywhere

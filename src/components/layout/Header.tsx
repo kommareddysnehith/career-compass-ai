@@ -39,7 +39,7 @@ export const Header = ({ isLoggedIn = false }: HeaderProps) => {
             <Compass className="h-5 w-5 text-primary-foreground" />
           </div>
           <span className="text-xl font-bold gradient-hero-text hidden sm:inline-block">
-            CareerCompass AI
+            Voca
           </span>
         </Link>
 

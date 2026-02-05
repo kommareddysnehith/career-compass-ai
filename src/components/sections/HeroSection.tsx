@@ -47,8 +47,8 @@ export const HeroSection = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mb-6 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            Discover Your{" "}
-            <span className="gradient-hero-text">Perfect Career Path</span>
+            Stop searching.{" "}
+            <span className="gradient-hero-text">Find where you fit</span>
           </motion.h1>
 
           {/* Subheading */}
@@ -58,8 +58,8 @@ export const HeroSection = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="mb-10 text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto"
           >
-            Get personalized career recommendations powered by AI. Complete our
-            assessment and unlock a roadmap tailored just for you.
+            AI-powered career guidance tailored just for you. Discover your perfect 
+            career path and unlock a roadmap to get there.
           </motion.p>
 
           {/* CTA Buttons */}
