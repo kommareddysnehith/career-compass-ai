@@ -1,18 +1,44 @@
+import { useState, useCallback } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { PreviewBanner } from "@/components/layout/PreviewBanner";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { FeaturesSection } from "@/components/sections/FeaturesSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { ChatWidget } from "@/components/chat/ChatWidget";
+import { OnboardingModal } from "@/components/onboarding/OnboardingModal";
+import { GuidedTour } from "@/components/onboarding/GuidedTour";
 import { Link } from "react-router-dom";
 
 const Index = () => {
+  const [isTourActive, setIsTourActive] = useState(false);
+
+  const handleStartTour = useCallback(() => {
+    setIsTourActive(true);
+  }, []);
+
+  const handleSkipOnboarding = useCallback(() => {
+    // User skipped, do nothing special
+  }, []);
+
+  const handleTourComplete = useCallback(() => {
+    setIsTourActive(false);
+  }, []);
+
+  const handleRestartTour = useCallback(() => {
+    localStorage.removeItem("voca_onboarding_seen");
+    setIsTourActive(true);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
-      <Header isLoggedIn={false} />
+      <PreviewBanner />
+      <Header isLoggedIn={false} onRestartTour={handleRestartTour} />
       <main className="flex-1">
         <HeroSection />
-        <FeaturesSection />
+        <div data-tour="features">
+          <FeaturesSection />
+        </div>
         <TestimonialsSection />
         
         {/* CTA Section */}
@@ -43,7 +69,13 @@ const Index = () => {
         </section>
       </main>
       <Footer />
-      <ChatWidget />
+      <div data-tour="chat-widget">
+        <ChatWidget />
+      </div>
+
+      {/* Onboarding */}
+      <OnboardingModal onStartTour={handleStartTour} onSkip={handleSkipOnboarding} />
+      <GuidedTour isActive={isTourActive} onComplete={handleTourComplete} />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Bell, ChevronDown, User, Settings, LogOut, Compass } from "lucide-react";
+import { Menu, X, Bell, ChevronDown, User, Settings, LogOut, Compass, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -22,9 +23,10 @@ const navLinks = [
 
 interface HeaderProps {
   isLoggedIn?: boolean;
+  onRestartTour?: () => void;
 }
 
-export const Header = ({ isLoggedIn = false }: HeaderProps) => {
+export const Header = ({ isLoggedIn = false, onRestartTour }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -44,7 +46,7 @@ export const Header = ({ isLoggedIn = false }: HeaderProps) => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden md:flex items-center gap-1" data-tour="nav-home">
           {navLinks.map((link) => (
             <Link
               key={link.path}
@@ -62,6 +64,27 @@ export const Header = ({ isLoggedIn = false }: HeaderProps) => {
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-3">
+          {/* Help/Tour Button */}
+          {onRestartTour && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={onRestartTour}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <HelpCircle className="h-5 w-5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Restart tour</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+
           {isLoggedIn ? (
             <>
               {/* Notifications */}
