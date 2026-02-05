@@ -80,9 +80,6 @@ export type Recommendation = {
 const API_BASE = "http://127.0.0.1:8000";
 
 export async function getRecommendations(input: UserInput): Promise<Recommendation[]> {
-  console.log('Attempting to connect to:', `${API_BASE}/recommend-careers`);
-  console.log('Sending data:', input);
-  
   const res = await fetch(`${API_BASE}/recommend-careers`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -90,27 +87,19 @@ export async function getRecommendations(input: UserInput): Promise<Recommendati
   });
 
   if (!res.ok) {
-    throw new Error(`API error ${res.status}: ${res.statusText}`);
+    throw new Error(`API error ${res.status}`);
   }
 
   const data = await res.json();
-  console.log('Received data:', data);
   return data.recommendations as Recommendation[];
 }
 
 export async function checkHealth(): Promise<{ message: string }> {
-  console.log('Testing connection to:', `${API_BASE}/`);
-  
-  const res = await fetch(`${API_BASE}/`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  });
+  const res = await fetch(`${API_BASE}/`);
   
   if (!res.ok) {
-    throw new Error(`Health check failed: ${res.status} ${res.statusText}`);
+    throw new Error(`Health check failed: ${res.status}`);
   }
   
-  const data = await res.json();
-  console.log('Health check response:', data);
-  return data;
+  return await res.json();
 }
