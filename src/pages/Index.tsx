@@ -9,29 +9,22 @@ import { ChatWidget } from "@/components/chat/ChatWidget";
 import { OnboardingModal } from "@/components/onboarding/OnboardingModal";
 import { GuidedTour } from "@/components/onboarding/GuidedTour";
 import { Link } from "react-router-dom";
-
 const Index = () => {
   const [isTourActive, setIsTourActive] = useState(false);
-
   const handleStartTour = useCallback(() => {
     setIsTourActive(true);
   }, []);
-
   const handleSkipOnboarding = useCallback(() => {
     // User skipped, do nothing special
   }, []);
-
   const handleTourComplete = useCallback(() => {
     setIsTourActive(false);
   }, []);
-
   const handleRestartTour = useCallback(() => {
     localStorage.removeItem("voca_onboarding_seen");
     setIsTourActive(true);
   }, []);
-
-  return (
-    <div className="min-h-screen flex flex-col">
+  return <div className="min-h-screen flex flex-col opacity-100">
       <PreviewBanner />
       <Header isLoggedIn={false} onRestartTour={handleRestartTour} />
       <main className="flex-1">
@@ -52,16 +45,10 @@ const Index = () => {
               Join 50,000+ people who've discovered their ideal career path. Start your free assessment today.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link 
-                to="/register" 
-                className="inline-flex items-center justify-center gap-2 h-14 px-10 rounded-xl bg-primary-foreground text-primary font-bold shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all"
-              >
+              <Link to="/register" className="inline-flex items-center justify-center gap-2 h-14 px-10 rounded-xl bg-primary-foreground text-primary font-bold shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all">
                 Start Free Assessment
               </Link>
-              <Link
-                to="#"
-                className="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-xl border-2 border-primary-foreground/50 text-primary-foreground font-semibold hover:bg-primary-foreground/10 transition-all"
-              >
+              <Link to="#" className="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-xl border-2 border-primary-foreground/50 text-primary-foreground font-semibold hover:bg-primary-foreground/10 transition-all">
                 Talk to an Advisor
               </Link>
             </div>
@@ -76,8 +63,6 @@ const Index = () => {
       {/* Onboarding */}
       <OnboardingModal onStartTour={handleStartTour} onSkip={handleSkipOnboarding} />
       <GuidedTour isActive={isTourActive} onComplete={handleTourComplete} />
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
