@@ -165,7 +165,7 @@ export const GuidedTour = ({
         opacity: 1
       }} exit={{
         opacity: 0
-      }} className="fixed inset-0 bg-background/60 backdrop-blur-sm z-[100] opacity-30" onClick={handleComplete} />
+      }} className="fixed inset-0 bg-background/60 backdrop-blur-sm z-[100] opacity-10" onClick={handleComplete} />
  
            {/* Spotlight on target element */}
            <TargetHighlight target={step.target} />
