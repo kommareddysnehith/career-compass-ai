@@ -1,12 +1,15 @@
+import * as React from "react";
 import { Link } from "react-router-dom";
 import { Compass, Twitter, Linkedin, Github, Mail } from "lucide-react";
 
-export const Footer = () => {
+export const Footer = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
+  (props, ref) => {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="border-t border-border bg-muted/30">
-      <div className="container px-4 md:px-6 py-12">
+      {/* @ts-ignore - ref passed to forwardRef */}
+      <div className="container px-4 md:px-6 py-12" ref={ref as any}>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="md:col-span-1">
@@ -112,4 +115,7 @@ export const Footer = () => {
       </div>
     </footer>
   );
-};
+  }
+);
+
+Footer.displayName = "Footer";

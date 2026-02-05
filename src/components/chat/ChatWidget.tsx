@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Bot, User, Sparkles } from "lucide-react";
@@ -29,7 +30,8 @@ const botResponses: Record<string, string> = {
     "Based on current market data for your location and experience level, here are salary ranges for your top matches:\n\n• UX Designer: $70K - $120K\n• Product Manager: $85K - $150K\n• Data Analyst: $65K - $110K\n\nThese figures can increase 20-30% with specialized skills!",
 };
 
-export const ChatWidget = () => {
+export const ChatWidget = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  (props, ref) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -89,8 +91,8 @@ export const ChatWidget = () => {
     sendMessage(inputValue);
   };
 
-  return (
-    <>
+    return (
+      <div ref={ref} {...props}>
       {/* Floating Button */}
       <AnimatePresence>
         {!isOpen && (
@@ -246,6 +248,9 @@ export const ChatWidget = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
-  );
-};
+      </div>
+    );
+  }
+);
+
+ChatWidget.displayName = "ChatWidget";
