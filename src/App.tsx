@@ -10,6 +10,8 @@ import Roadmap from "./pages/Roadmap";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SavedCareers from "./pages/SavedCareers";
+import ApiTest from "./pages/ApiTest";
+import CareerAssessment from "./pages/CareerAssessment";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +30,8 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/saved" element={<SavedCareers />} />
+          <Route path="/api-test" element={<ApiTest />} />
+          <Route path="/assessment" element={<CareerAssessment />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
