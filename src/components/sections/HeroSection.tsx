@@ -68,6 +68,7 @@ export const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            data-tour="hero-cta"
           >
             <Button variant="hero" size="xl" asChild className="group">
               <Link to="/register">
